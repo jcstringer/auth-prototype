@@ -1,5 +1,7 @@
 Auth::Application.routes.draw do
+
   resources :users, except: [:edit, :new], format: :json
+  resource  :profile, only: :show, format: :json
 
 
   # The priority is based upon order of creation:
