@@ -18,19 +18,29 @@ class ProfilesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test "unauthorized with a bad token in http header" do
+    login_with_oauth_token "thisisabadtoken"
+    get :show, format: :json
+    assert_response :unauthorized
+  end
 
   test "shows with token auth in querystring" do
     get :show, token: @user.auth_token, format: :json
     assert_response :success
   end
 
+  test "unauthorized with a bad token in querystring" do
+    get :show, token: "thisisabadtoken", format: :json
+    assert_response :unauthorized
+  end
+
 	test "redirects without auth" do
     get :show, format: :json
-    assert_response :forbidden
+    assert_response :unauthorized
   end
 
   def login_with_oauth_token(token)
-    @request.env['HTTP_AUTHORIZATION'] = "Authorization: token #{token}"
+    @request.env['Authorization'] = token
   end
 
   def login_with_basic_auth(user)

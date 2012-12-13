@@ -4,6 +4,7 @@ chris:
   email: chris@example.com
   name: Chris Stringer
   password: passwordchris
+  auth_token: 12345
 
 mike:
   email: mike@example.com
