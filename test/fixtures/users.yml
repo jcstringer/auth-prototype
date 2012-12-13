@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+chris:
+  email: chris@example.com
+  name: Chris Stringer
+  password: passwordchris
+
+mike:
+  email: mike@example.com
+  name: Mike Moore
+  password: passwordmike
