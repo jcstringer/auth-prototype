@@ -23,14 +23,17 @@ class ProfilesController < ApplicationController
   def authenticate_user!
   	return if @authenticated
 
-   	@current_user = authenticate_with_http_basic { |u, p| User.find_by_email_and_password(u, p) } ||
-   									(auth_token.present? ? @current_user = User.find_by_auth_token(auth_token) : nil)
+   	@current_user = (auth_token.present? ? User.find_by_auth_token(auth_token) : nil) || authenticate_with_http_basic { |u, p| User.find_by_email_and_password(u, p) }
 
   	@authenticated = true
   end
 
   def auth_token
-  	request.headers['Authorization'] || params[:token]
+		if header = request.headers["HTTP_AUTHORIZATION"] || request.headers["Authorization"]
+      header.split(" ").last
+    else
+    	params[:token]
+    end
   end
 
   def unauthorized

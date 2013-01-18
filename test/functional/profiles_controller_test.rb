@@ -40,11 +40,11 @@ class ProfilesControllerTest < ActionController::TestCase
   end
 
   def login_with_oauth_token(token)
-    @request.env['Authorization'] = token
+    @request.headers['Authorization'] = "token #{token}"
   end
 
   def login_with_basic_auth(user)
-    @request.env['HTTP_AUTHORIZATION'] = encode_credentials(user.email, user.password)
+    @request.headers['HTTP_AUTHORIZATION'] = encode_credentials(user.email, user.password)
   end
 
   def encode_credentials(username, password)
